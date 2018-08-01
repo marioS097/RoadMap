@@ -1,0 +1,42 @@
+﻿RoadMap Formación Victor y Javier:
+
+Vagrant
+1. Hola Mundo (java -jar)
+2. Mongo 
+3. Unión APPs (2 págs, listar e insertar)
+  3.2. Guardar en Mongo
+4. Volumen en Mongo
+
+Docker - primeros pasos (Todo debe estar en GitHub)
+1. Hola Mundo (java -jar)
+2. Mongo Docker
+3. Unión APPs (2 págs, listar e insertar)
+  3.1. Contrucción APP con Docker
+  3.2. Guardar en Mongo
+4. Volumen en Mongo
+5. Lo mismo con Docker-Compose
+
+OpenStack
+1. Creación Networks en general (router + network + unión)
+2. Security Groups
+
+Orquestadores:
+- Docker Swarm
+  1. Mini-Formación (Get-Started)
+  2. Montarse cluster Docker Swarm (1 manager 2 workers)
+  3. Montar el Swarm la app de votación del Get-Started
+  4. Uso de Registries de DockerHub (registrarse, subir imágenes, usarlas, ...)
+  5. Montar la APP de antes (punto Docker) con Docker Swarm Stack
+  6. Deplegar varios servicios (gogs, jenkins, ...)
+
+- Kubernetes
+  1. Mini-Formación
+  2. Montar cluster
+  3. Buscar APP para desplegar de get-Started
+  4. Montar la APP de Docker (punto Docker) que antes
+  5. Deplegar varios servicios (gogs, jenkins, ...)
+  6. Pipeline de Kubernetes
+
+- OpenShift
+  1. Mini-Formación
+  2. Ya iremos viendo
