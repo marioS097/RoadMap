@@ -1,0 +1,76 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+
+Vagrant.configure("2") do |config|
+
+
+#Configuraccion de red para las dos maquinas
+	config.vm.network :forwarded_port, guest: 80, host: 8931, auto_correct: true
+	config.vm.network "private_network", type: "dhcp"
+
+#Realizar update al instalar la maquina
+	config.vm.provision "shell",
+	inline: "sudo apt-get update -y"
+
+#Instalar las guest-additions
+	config.vm.provision "shell",
+	inline: "sudo apt-get install virtualbox-guest-additions-iso -y"
+
+
+#Instalar java
+	$scriptJava = <<-JAVA
+		sudo apt-get install default-jre -y
+		sudo apt-get install default-jdk -y
+	JAVA
+
+#Instalar Mongo
+	$scriptMongo = <<-MONGO
+		sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 2930ADAE8CAF5059EE73BB4B58712A2291FA4AD5
+		sudo echo "deb [ arch=amd64,arm64 ] http://repo.mongodb.org/apt/ubuntu "$(lsb_release -sc)"/mongodb-org/3.6 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb.list
+		sudo apt-get update -y
+		sudo apt-get install -y mongodb-org
+		sudo systemctl enable mongod
+	MONGO
+
+#Instalar Docker
+	$scriptDocker = <<-DOCKER
+		sudo apt-get update -y
+		sudo apt-get install \ apt-transport-https \ ca-certificates \ curl \ software-properties-common -y
+		curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+		sudo add-apt-repository \ "deb [arch=amd64] https://download.docker.com/linux/ubuntu \ $(lsb_release -cs) \ stable"
+		sudo apt-get update -y 
+		sudo apt-get install docker-ce -y
+		apt-cache madison docker-ce
+		sudo apt-get install  docker-ce=apt-cache madison docker-ce -y
+	DOCKER
+
+# VirtualMachine 1 Docker
+   config.vm.define :docker do |docker|
+       	docker.vm.hostname = "docker"
+	docker.vm.box = "gecko719/ubuntu-trusty64-docker"
+	#docker.vm.provision "shell", inline: $scriptDocker
+   end
+
+# VirtualMachine 2 MongoDB
+   	config.vm.define :mongo do |mongo|
+      	mongo.vm.hostname = "mongo"
+	mongo.vm.box = "thezecke11/ubuntu_desktop_164"
+	mongo.vm.provision "shell", inline: $scriptMongo
+   end
+
+# VirtualMachine 3 GUI
+   config.vm.define :uGUI do |uGUI|
+	uGUI.vm.hostname = "GUI"
+	uGUI.vm.box = "thezecke11/ubuntu_desktop_16"
+  	uGUI.vm.box_version = "1.0.0"
+	uGUI.vm.provision "shell", inline: $scriptJava
+    end
+
+#VirtualMachine 4 Kali
+   config.vm.define :kali do |kali|
+	kali.vm.hostname = "kali"
+	kali.vm.box = "codementality/kalilinux"
+   end
+
+end
