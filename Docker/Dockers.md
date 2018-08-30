@@ -32,25 +32,25 @@ El contenedor de Docker aloja todo lo necesario para ejecutar un servicio o apli
 
 > **$ docker search centos**
 
-1.  Instalar una versión Ubuntu 14.04
+2.  Instalar una versión Ubuntu 14.04
 
 > **$ docker pull ubuntu:14.04**
 
-1.  Visualizar las imágenes de nuestro anfitrión
+3.  Visualizar las imágenes de nuestro anfitrión
 
 > **$ docker images**
 
-1.  Acceder al contenedor además de crearlo. Hay 2 formas
+4.  Acceder al contenedor además de crearlo. Hay 2 formas
 
-    1.  Mediante IMAGE ID
+4.1.  Mediante IMAGE ID
 
 > **$ docker run -i -t b72889fa879c /bin/bash**
 
-1.  Mediante REPOSITORY y TAG
+4.2.  Mediante REPOSITORY y TAG
 
 > **$ docker run -i -t ubuntu:14.04 /bin/bash**
 
-1.  Añadir etiqueta personalizada
+5.  Añadir etiqueta personalizada
 
 > **$ docker tag b72889fa879c oldlts:latest**
 
@@ -63,6 +63,7 @@ El contenedor de Docker aloja todo lo necesario para ejecutar un servicio o apli
 -   Borrar imágenes y contenedores
 
 **docker stop** $(docker ps -a -q)
+-   Detiene imagenes
 
 **docker rm** $(docker ps -a -q)
 
@@ -182,7 +183,7 @@ Se suele usar **COPY** porque es más específico
 
 1.  **Exec form** (ENTRYPOINT \[“exec”, “param1”, “param2”\]) Ejecuta comandos y parámetros que pueden utilizar el **CMD** para ampliarlos
 
-2.  **Shell form** (ENTRYPOINT command param1 param2 Ignora los comandos de linea que se ejecutan por Docker o CMD
+2.  **Shell form** (ENTRYPOINT command param1 param2) Ignora los comandos de linea que se ejecutan por Docker o CMD
 
 ## Docker Compose
 
@@ -192,7 +193,7 @@ Se suele usar **COPY** porque es más específico
 
     -   export DOCKER\_HOST=127.0.0.1
 
-### Comandos
+### Comandos Basicos
 
 -   docker-compose version
 
@@ -205,8 +206,6 @@ Se suele usar **COPY** porque es más específico
 -   docker-compose stop
 
 -   netstat -ntl \| grep 8080
-
--   curl ifconfig.me
 
 # Bibliografía
 
