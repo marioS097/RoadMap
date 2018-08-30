@@ -155,7 +155,7 @@ El contenedor de Docker aloja todo lo necesario para ejecutar un servicio o apli
 
 -   Crear volumen persistente
 
-**docker run -v \[rutaHost\]:\[rutaContenedor\] **
+**docker run -v \[rutaHost\]:\[rutaContenedor\]**
 
 -   Mapea los volúmenes asignados desde el contenedor fuente al contenedor que se está lanzando.
 
