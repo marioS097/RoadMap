@@ -116,6 +116,10 @@ El contenedor de Docker aloja todo lo necesario para ejecutar un servicio o apli
     -   Añadir al Dockerfile
 
     -   \["java", **"-Djava.security.egd=file:/dev/./urandom",** "-jar", "/usr/src/app/mongodb.war"\]
+  
+-  Error del servicio
+    -  Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+    -  **Systemctl restart docker** Para reiniciar el servicio y volver a levantarlo 
 
 ## Docker Network
 

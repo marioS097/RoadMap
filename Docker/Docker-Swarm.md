@@ -20,9 +20,9 @@ Cuando creas un servicio, especificas una imagen del contenedor a usar y los com
 
 Replicado: Swarm creara una tarea por cada replica que le indiquemos para después distribuirlas en el clúster.
 
-Global: Swarm ejecutara una tarra en cada uno de los nodos del clúster.
+**Global:** Swarm ejecutara una tarra en cada uno de los nodos del clúster.
 
-Task: Suma de un contenedor más el comando que ejecutamos dentro de el mismo.
+**Task:** Suma de un contenedor más el comando que ejecutamos dentro de el mismo.
 
 Ante la caída de una tarea, Swarm es capaz de crear otra similar en ese u otro nodo para cumplir con el número de réplicas definido.
 
@@ -97,6 +97,15 @@ Los managers usan el sistema de balanceo para exponer los servicios que se desea
 -   Limpiar docker swarm
 
     -   **Docker swarm leave --force**
+
+## Lanzar un servicio con docker-compose.yml
+-   Con el alrchivo *docker-compose.yml* creado lanzamos el servicio
+
+> docker stack deploy -c docker-compose.yml *[nombre del servicio]*
+
+-   Ver listado de servicios con las replicas
+  
+> docker service ls
 
 ## Rolling Updates
 
