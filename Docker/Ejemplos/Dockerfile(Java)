@@ -1,0 +1,18 @@
+#################################################
+#                       JAVA                    #
+#################################################
+
+#Imagen base
+FROM openjdk:8-jdk
+
+#Creador
+MAINTAINER Mario
+
+#Copia el archivo java dentro de la imagen
+COPY springapp.war springapp.war
+
+#Puertos
+EXPOSE 8080:8080
+
+#Comando a ejecutar
+ENTRYPOINT ["java", "-Dspring.data.mongodb.uri=mongodb://spring-demo-mongo/users","-jar","/springapp.war"]
