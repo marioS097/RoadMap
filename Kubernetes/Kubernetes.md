@@ -2,7 +2,7 @@
 
 Es un proyecto para la gestión de aplicaciones en contenedores **Docker**. Permite empaquetar las aplicaciones en contenedores y trasladaros fácil y rápidamente a cualquier equipo para ejecutarlas.
 
-## Operaciones básicas
+## Objetos de Kubernetes
 
 ### Pods 
 
@@ -16,10 +16,30 @@ Un replication controller **se asegura de que grupo de uno o más pods esté sie
 
 Un service es una **abstracción que define un grupo lógico de pods y una política de acceso a los mismos**. Es la manera de comunicarse los pods debido a que sus IP son variables y si uno se cae y es sustituido por otro.
 
+## Instalación
+
+1. Tener instalado *docker*
+2. Crear y editar el fichero *kubernetes.repo*
+>sudo vim /etc/yum.repos.d/kubernetes.repo
+>
+>[kubernetes]
+  name=Kubernetes
+  baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
+  enabled=1
+  gpgcheck=1
+  repo_gpgcheck=1
+  gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+3. Actualizar los paquetes
+> sudo yum update
+4. Instalar los servicios
+> sudo yum install -y kubelet kubeadm kubectl
+5. Levantar los servicios
+> sudo systemctl enable kubelet && sudo systemctl start kubelet
+
 ## Bibliografía 
 
-[<span class="underline">http://www.javiergarzas.com/2015/07/que-es-docker-sencillo.html</span>](http://www.javiergarzas.com/2015/07/que-es-docker-sencillo.html) (Kubernetes 10 min)
+- [<span class="underline">http://www.javiergarzas.com/2015/07/que-es-docker-sencillo.html</span>](http://www.javiergarzas.com/2015/07/que-es-docker-sencillo.html) (Kubernetes 10 min)
 
-[<span class="underline">https://www.adictosaltrabajo.com/tutoriales/primeros-pasos-con-kubernetes/\#051</span>](https://www.adictosaltrabajo.com/tutoriales/primeros-pasos-con-kubernetes/#051) (Operaciones básicas de Kubernetes)
+- [<span class="underline">https://www.adictosaltrabajo.com/tutoriales/primeros-pasos-con-kubernetes/\#051</span>](https://www.adictosaltrabajo.com/tutoriales/primeros-pasos-con-kubernetes/#051) (Operaciones básicas de Kubernetes)
 
-[<span class="underline">http://enmilocalfunciona.io/introduccion-a-kubernetes-i/</span>](http://enmilocalfunciona.io/introduccion-a-kubernetes-i/) (Kubernetes con Vagrant y Vbox)
+- [<span class="underline">http://enmilocalfunciona.io/introduccion-a-kubernetes-i/</span>](http://enmilocalfunciona.io/introduccion-a-kubernetes-i/) (Kubernetes con Vagrant y Vbox)
