@@ -36,6 +36,15 @@ Un service es una **abstracción que define un grupo lógico de pods y una polí
 5. Levantar los servicios
 > sudo systemctl enable kubelet && sudo systemctl start kubelet
 
+## Errores
+- [ERROR FileContent--proc-sys-net-bridge-bridge-nf-call-iptables]: /proc/sys/net/bridge/bridge-nf-call-iptables contents are not set to 1
+  - Editar el archivo y cambiar el *0* por el *1*
+- [WARNING SystemVerification]: docker version is greater than the most recently validated version. Docker version: 18.06.1-ce. Max validated version: 17.03
+  - sudo yum install docker-ce-17.03.0.ce-1.el7.centos
+- kubeadm init --ignore-preflight-errors Swap
+
+- minikube start hyperv
+
 ## Bibliografía 
 
 - [<span class="underline">http://www.javiergarzas.com/2015/07/que-es-docker-sencillo.html</span>](http://www.javiergarzas.com/2015/07/que-es-docker-sencillo.html) (Kubernetes 10 min)
