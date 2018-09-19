@@ -5,13 +5,13 @@
 1. Con minikube instalado, comprobamos la version
     > minikube version
 2. Lanzamos el clúster
-> minikube start
-- Ahora está corriendo el clúster de Kubernetes en la terminal
+    > minikube start
+    - Ahora está corriendo el clúster de Kubernetes en la terminal
 1. Para interactuar con Kubernetes se utiliza el comando **kubectl**
-> kubectl  version
-> kubectl cluster-info
-- Visualizar los nodos
-> kubectl get nodes
+    > kubectl  version
+    > kubectl cluster-info
+    - Visualizar los nodos
+    > kubectl get nodes
 
 ## 2. Desplegar una aplicación
 
