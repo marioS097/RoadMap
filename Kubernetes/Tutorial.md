@@ -7,7 +7,7 @@
 2. Lanzamos el clúster
     > minikube start
     - Ahora está corriendo el clúster de Kubernetes en la terminal
-1. Para interactuar con Kubernetes se utiliza el comando **kubectl**
+3. Para interactuar con Kubernetes se utiliza el comando **kubectl**
     > kubectl  version
     > kubectl cluster-info
     - Visualizar los nodos
@@ -20,8 +20,8 @@
 2. Para ver los nodos del clúster
     > kubectl get nodes
 3. Lanzar la aplicación
-    - El comando **run** cra unm nuevo despliegue
-    - Es enecesario proporcionar un *nombre* y una *imagen* además de especificar el puerto con **--port**
+    - El comando **run** crea un nuevo despliegue
+    - Es necesario proporcionar un *nombre* y una *imagen* además de especificar el puerto con **--port**
     > kubectl run kubernetes-bootcamp --image=gcr.io/google-samples/kubernetes-bootcamp:v1 --port=8080
 4. Ver la lista de despliegues
     > kubectl get deployments
