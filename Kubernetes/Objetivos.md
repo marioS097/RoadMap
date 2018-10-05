@@ -79,7 +79,7 @@
 
 - **Deployments:** Un controlador de implementación proporciona actualizaciones declarativas para *Pods* y *ReplicaSets*.
   - Describe un estado deseado en un objeto de Despliegue(YAML/JSON), y el controlador de despliegue cambia del estado real al deseado a un velocidad controlada. Puee definir implementaciones para crear nuevos conjuntos de réplicas, o para eliminar implementaciones existentes y adoptar todos sus recusos con despliegues nuevos.
-- **ReplicaSet:** Garantiza que se ejecute un número especifico de réplicas de pod en cualquier momento, es decir qye esten siempre activos y disponibles.
+- **ReplicaSet:** Garantiza que se ejecute un número especifico de réplicas de pod en cualquier momento, es decir que esten siempre activos y disponibles.
 - **Service:** Es una abstracción (un nombre único) que define un conjunto de *pods* y la lógica para acceder a los mimos. Normalmente un conjunto de *Pods* están destinados a un servicio. El conjunto de *Pods* que está etiquetado por un servicio está determinado por un "Selector de Labels" (también podríamos querer tener un servicio sin un Selector).
   - Con esto se consigue que si hay un cambio en un *Pod*, esto es totalmente transparente para el usuario y el servicio.
   - Los servicios ofrecen la capacidad para buscar y distribuir el tráfico porporcionando un nombre y dirección o puerto persistente para los *pods* con un conjunto de *labels*

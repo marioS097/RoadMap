@@ -8,7 +8,7 @@
     > minikube start
     - Ahora está corriendo el clúster de Kubernetes en la terminal
 3. Para interactuar con Kubernetes se utiliza el comando **kubectl**
-    > kubectl  version
+    > kubectl  version  
     > kubectl cluster-info
     - Visualizar los nodos
     > kubectl get nodes
@@ -58,7 +58,7 @@
 6. Listar los *logs* de un Pod
     > kubectl logs $POD_NAME
 7. Listar las variables de entorno
-    > kubectl esec $POD_NAME env
+    > kubectl exec $POD_NAME env
 8. Si el Pod está levnatado y corriendo podemos ejecuta comandos directamente en el contenedor
     - Lanzamos el *bash*
     > kubectl exec -it $POD_NAME bash
