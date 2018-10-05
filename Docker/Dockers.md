@@ -6,17 +6,17 @@ Docker tiene dos partes, un demonio que debe arrancarse de fondo, y el cliente D
 
 ## Contenidos/Conceptos a tener en cuenta
 
-### Contenedor:
+### Contenedor
 
 Los contenedores de aplicaciones son entornos ligeros de tiempo de ejecución que proporcionan a las aplicaciones los archivos, las variables y las bibliotecas que necesitan para ejecutarse, maximizando de esta forma su portabilidad.
 
-### Gestión de imágenes:
+### Gestión de imágenes
 
-### Configuración NetWork:
+### Configuración NetWork
 
-### Volúmenes:
+### Volúmenes
 
-### Dockerfile: 
+### Dockerfile
 
 ### Docker Images
 
