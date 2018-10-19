@@ -42,22 +42,26 @@
    > sudo systemctl daemon-reload  
    > sudo systemctl restart kubelet  
    > sudo systemctl status kubelet
-3. **Inicializar el *master***
+3. Crear la subred
+   > kubectl apply -f "<https://cloud.weave.works/k8s/net?k8s-version=$(kubectl> version | base64 | tr -d '\n')"
+   - Comprobar que está funcionando
+     > kubectl get pods --all-namespaces
+4. **Inicializar el *master***
    > sudo kubeadm init --pod-network-cidr=10.244.0.0/16
-4. Funcionar con usuarios no root
+5. Funcionar con usuarios no root
    > mkdir -p $HOME/.kube  
    > sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config  
    > sudo chown $(id -u):$(id -g) $HOME/.kube/config
    - Si eres usuario root:
       > export KUBECONFIG=/etc/kubernetes/admin.conf
-5. Comprobar el sericio
+6. Comprobar el sericio
     > sudo systemctl status kubelet
-6. Comprobar que se ha levantado el nodo
+7. Comprobar que se ha levantado el nodo
     > kubectl get nodes
-7. Añadir los servidores
+8. Añadir los servidores
    - Desde otra maquina
    > kubeadm join --token 350120.fdd5be57c172dca1 192.168.0.216:6443 --discovery-token-ca-cert-hash sha256:d7b06c32c6c414606aa573ea86124e843497676e69867cf2a76420d4107a238e
-8. Comprobar que se han añadido correctamente
+9.  Comprobar que se han añadido correctamente (Desde la maquina *Master*)
     > kubectl get nodes
 
 ## Lanzar un despliegue
@@ -119,6 +123,14 @@
    - Voler a una version en especifico
    > kubectl rollout undo deployment/nginx-deployment --to-revision=2
 
+## Escalar un despliegue
+
+> kubectl scale deployment nginx-deployment --replicas=10
+- También se puede configurar para que autoescale
+  > kubectl autoscale deployment nginx-deployment --min=10 --max=15 --cpu-percent=80
+- Comprobarlo
+  > kubectl get deployments
+
 ## Comandos útiles
 
 - **Quitar nodos**
@@ -128,6 +140,8 @@
   > kubeadm reset
 - **Listar los *token***
     > sudo kubeadm token list
+- **Cambiar el número de replicas**
+  > kubectl scale deployment nginx-deployment --replicas=10
 
 ## Errores
 
@@ -149,17 +163,6 @@
   - Resetear todo
   > kubeadm reset  
   > yum remove kubelet kubeadm kubectl
-
-## Añadidos
-
-1. Elegir un add-on de red de pod
-    1. Instalar un network pod add-on *(Calcio)*
-        > kubectl apply -f https://docs.projectcalico.org/v3.1/getting-started/kubernetes/installation/hosted/rbac-kdd.yaml  
-        > kubectl apply -f https://docs.projectcalico.org/v3.1/getting-started/kubernetes/installation/hosted/kubernetes-datastore/calico-networking/1.7/calico.yaml
-    2. Confirmar que está trabajando
-        > kubectl get pods --all-namespaces
-2. Instalar **minikube**
-    > curl -Lo minikube https://storage.googleapis.com/minikube/releases/v0.29.0/minikube-linux-amd64 && chmod +x minikube && sudo cp minikube /usr/local/bin/ && rm minikube
 
 ## Bibliografía
 

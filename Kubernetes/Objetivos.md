@@ -10,6 +10,8 @@
   - Services
   - Pods
   - Ingress Controller
+- Network add-on
+- Namespaces
 
 ## Ejercicio
 
@@ -75,6 +77,12 @@
 
 ---
 
+## Network add-on
+
+- **Se debe instalar un *pod network add-on* para que los *pds* puedan comunicarse entre sí.**
+
+---
+
 ## Conceptos base (YAML/JSON)
 
 - **Deployments:** Un controlador de implementación proporciona actualizaciones declarativas para *Pods* y *ReplicaSets*.
@@ -87,7 +95,7 @@
 - **PODs (Docker):** Son la unidad más pequeña desplegable que puede ser creada, programada y manejada por Kubernetes. Son un grupo de contenedores *Dockers*, de aplicaciones que comparten volúmenes y red. Son las unidades más pequeñas que pueden ser creadas, programadas y manejadas por Kubernetes. Deben ser desplegados y gestionados por controladores de réplicas.
   - **Pods que corren en un solo contenedor:** Son los más comúnes. En estos casos se puede pensar en un *Pod* como si fuera un envoltorio alrededor de un solo contenedor, en este caso Kubernetes adminisrta los *Pods* en ligar de los contenedores directamente.
   - **Pods que corren en varios contenedores y necesitan trabajar juntos:** Un *Pod* puede encapsular una aplicación compuesta por múltiples contenedores ubicados conjuntamente que están estrechamente conectados y necesitan compartir recursos. El *Pod* agrupa estos contenedores y recursos de almacenamiento juntos como una única entidad manejable
-- **Ingress controllers:** Los servicios y pods tienen IPs solo enrutables por la red del clúster. Todo el tráfico que termina en un enrutador de borde se descarta o se reenvía a otro lugar. Los *Ingress* son una colección de reglas que permiten que las conexiones entrantes lleguen a los servicios del clúster.
+- **Ingress controllers:** Los servicios y pods tienen IPs solo enrutables por la red del clúster. Todo el tráfico que termina en un enrutador de borde se descarta o se reenvía a otro lugar. Los *Ingress* son una **colección de reglas que permiten** que **las conexiones entrantes** lleguen a los servicios del clúster.
 - **Clúster:** Conjunto de máquinas físicas o virtuales y otros recuros (almacenamiento, red, etc.) utilizados por Kubernetes dónde *pods* son desplegados, gestionados y replicados. Los clústeres de nodos están conectados por red y cada *nodo* y *pod* pueden comunicarse entre si. El tamaño de un clúster Kubernetes está entre 1 y 1000 *nodos*.
 - **Replication controller:** Se asegura de que el número especificado de réplicas del *pod* estén ejecutándose y funcionando en todo momento. Manejan el ciclo de vida de los *pods*, creándolos y destruyendolos como sea requerido. Permite escalar de forma fácil los sitemas y maneja la recreación de un *Pod* cuando ocurre un fallo. Gestiona los *Pods* a través de labels.
 - **Labels:** Son pares de clave/valor usados para agrupar, organizar y seleccionar un grupo de objetos tales como *Pods*. Son fundamentales para que los *services* y los *replications controllers* obtengan la lista de los servidores a donde el tráfico debe pasar.
