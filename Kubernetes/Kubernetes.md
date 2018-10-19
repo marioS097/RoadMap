@@ -42,26 +42,26 @@
    > sudo systemctl daemon-reload  
    > sudo systemctl restart kubelet  
    > sudo systemctl status kubelet
-3. Crear la subred
-   > kubectl apply -f "<https://cloud.weave.works/k8s/net?k8s-version=$(kubectl> version | base64 | tr -d '\n')"
-   - Comprobar que está funcionando
-     > kubectl get pods --all-namespaces
-4. **Inicializar el *master***
+3. **Inicializar el *master***
    > sudo kubeadm init --pod-network-cidr=10.244.0.0/16
-5. Funcionar con usuarios no root
+4. Funcionar con usuarios no root
    > mkdir -p $HOME/.kube  
    > sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config  
    > sudo chown $(id -u):$(id -g) $HOME/.kube/config
    - Si eres usuario root:
       > export KUBECONFIG=/etc/kubernetes/admin.conf
+5. Crear la subred
+   > kubectl apply -f "<https://cloud.weave.works/k8s/net?k8s-version=$(kubectl> version | base64 | tr -d '\n')"
+   - Comprobar que está funcionando
+     > kubectl get pods --all-namespaces
 6. Comprobar el sericio
     > sudo systemctl status kubelet
 7. Comprobar que se ha levantado el nodo
     > kubectl get nodes
 8. Añadir los servidores
-   - Desde otra maquina
+   - En el resto de maquinas
    > kubeadm join --token 350120.fdd5be57c172dca1 192.168.0.216:6443 --discovery-token-ca-cert-hash sha256:d7b06c32c6c414606aa573ea86124e843497676e69867cf2a76420d4107a238e
-9.  Comprobar que se han añadido correctamente (Desde la maquina *Master*)
+9. Comprobar que se han añadido correctamente (Desde la maquina *Master*)
     > kubectl get nodes
 
 ## Lanzar un despliegue
@@ -130,6 +130,38 @@
   > kubectl autoscale deployment nginx-deployment --min=10 --max=15 --cpu-percent=80
 - Comprobarlo
   > kubectl get deployments
+- Eliminar las normas de autoescalado
+  > kubectl delete hpa nginx-deployment
+
+## Espacios de nombres (Namespaces)
+
+### Crear un namespace
+
+- Crear un nuevo YAML
+  > nano my-namespace.yaml
+
+   ``` YAML
+   apiVersion: v1
+   kind: Namespace
+   metadata:
+   name: <insert-namespace-name-here>
+   ```
+  > kubectl create -f ./my-namespace.yaml
+
+### Eliminar un *namespace* 
+
+- Eliminar un *namespace*
+  > kubectl delete namespaces [*namespace*]
+
+- Ver los espacios de nombres
+  > kubectl get namespaces
+- Establecer temporalmente el espacio de nombres para una solicitud
+  > kubectl --namespace=[*namespace*] run nginx
+  > kubectl --namespace=[*namespace*] get pods
+- Guardar permannente el *namespaces* para todos los comandos kubectl posteriores
+  > kubectl config set-context $(kubectl config current-context) --namespace=[*namespace*]
+  - Comprobar que se ha guardado
+    > kubectl config view | grep namespace:
 
 ## Comandos útiles
 
@@ -163,6 +195,19 @@
   - Resetear todo
   > kubeadm reset  
   > yum remove kubelet kubeadm kubectl
+
+## Eliminar recursos
+
+- Eliminar un pod utilizando el tipo y el nombre en especifico del *pod.json*
+  > kubectl delete -f ./pod.json
+- Eliminar pods y servicios con los mismos nombres "baz" y "foo"
+  > kubectl delete pod,service baz foo
+- Eliminar pods y servicios con la etiqueta *myLabel*
+  > kubectl delete pods,services -l name=myLabel
+- Eliminar pods y servicios, incluso los no inicializados, con la etiqueta *myLabel*
+  > kubectl delete pods,services -l name=myLabel --include-uninitialized 
+- Eliminar todos los pods y servicios, incluso los no inicializados, en el *namespace my-ns*,
+  > kubectl -n my-ns delete po,svc --all
 
 ## Bibliografía
 

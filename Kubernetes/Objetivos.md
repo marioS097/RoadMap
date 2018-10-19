@@ -79,7 +79,24 @@
 
 ## Network add-on
 
-- **Se debe instalar un *pod network add-on* para que los *pds* puedan comunicarse entre sí.**
+- **Se debe instalar un *pod network add-on* para que los *pods* puedan comunicarse entre sí.**
+
+---
+
+## Namespaces
+
+- Kubernetes admite múltiples clústeres virtuales respaldados por el mismo clúster físico. Estos clústeres virtuales se denominan *namespaces*
+- Los *namespaces* están diseñados para ser utilizados en entornos con muchos usuarios distribuidos en varios equipos o proyectos
+- Los nombres de los recursos deben ser únicos dentro de un espacio de nombres, pero no entre *namespaces*
+
+### Trabajando con *namespaces*
+
+- Hay tres *namespaces* iniciales
+  - **default:** El espacio de nombres predeterminado para objetos sin otro espacio de nombres.
+  - **kube-system:** El espacio de nombres para los objetos creados por el sistema Kubernetes
+  - **kube-public:** Este espacio de nombres se crea automáticamente y es legible por todos los usuarios (incluidos aquellos no autenticados). Se reserva principalmente para el uso del clúster, en caso de que algunos recursos deban ser visibles y legibles públicamente en todo el clúster. El aspecto público de este espacio de nombres es solo una convención, no un requisito
+- Se pueden utilizar *namespaces* de forma temporal
+- Se puede guardar permanentemente el *namespaces* para todos los comandos kubectl posteriores
 
 ---
 
