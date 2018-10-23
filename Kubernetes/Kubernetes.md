@@ -135,25 +135,7 @@
 
 ## Espacios de nombres (Namespaces)
 
-### Crear un namespace
-
-- Crear un nuevo YAML
-  > nano my-namespace.yaml
-
-   ``` YAML
-   apiVersion: v1
-   kind: Namespace
-   metadata:
-   name: <insert-namespace-name-here>
-   ```
-  > kubectl create -f ./my-namespace.yaml
-
-### Eliminar un *namespace* 
-
-- Eliminar un *namespace*
-  > kubectl delete namespaces [*namespace*]
-
-- Ver los espacios de nombres
+- Ver los *namespaces*
   > kubectl get namespaces
 - Establecer temporalmente el espacio de nombres para una solicitud
   > kubectl --namespace=[*namespace*] run nginx
@@ -162,6 +144,30 @@
   > kubectl config set-context $(kubectl config current-context) --namespace=[*namespace*]
   - Comprobar que se ha guardado
     > kubectl config view | grep namespace:
+
+### Crear un namespace
+
+- Crear un nuevo YAML
+  > nano my-namespace.yaml
+
+  ``` YAML
+  apiVersion: v1
+  kind: Namespace
+  metadata:
+    name: mario-namespace
+    labels:
+      name:
+        mario-label
+   ```
+
+  > kubectl create -f ./my-namespace.yaml
+- Comprobar que se ha creado
+    > kubectl get namespaces --show-labels
+
+### Eliminar un *namespace*
+
+- Eliminar un *namespace*
+  > kubectl delete namespaces [*namespace*]
 
 ## Comandos útiles
 
@@ -174,6 +180,19 @@
     > sudo kubeadm token list
 - **Cambiar el número de replicas**
   > kubectl scale deployment nginx-deployment --replicas=10
+
+## Eliminar recursos
+
+- Eliminar un pod utilizando el tipo y el nombre en especifico del *pod.json*
+  > kubectl delete -f ./pod.json
+- Eliminar pods y servicios con los mismos nombres "baz" y "foo"
+  > kubectl delete pod,service baz foo
+- Eliminar pods y servicios con la etiqueta *myLabel*
+  > kubectl delete pods,services -l name=myLabel
+- Eliminar pods y servicios, incluso los no inicializados, con la etiqueta *myLabel*
+  > kubectl delete pods,services -l name=myLabel --include-uninitialized 
+- Eliminar todos los pods y servicios, incluso los no inicializados, en el *namespace my-ns*,
+  > kubectl -n my-ns delete po,svc --all
 
 ## Errores
 
@@ -195,19 +214,6 @@
   - Resetear todo
   > kubeadm reset  
   > yum remove kubelet kubeadm kubectl
-
-## Eliminar recursos
-
-- Eliminar un pod utilizando el tipo y el nombre en especifico del *pod.json*
-  > kubectl delete -f ./pod.json
-- Eliminar pods y servicios con los mismos nombres "baz" y "foo"
-  > kubectl delete pod,service baz foo
-- Eliminar pods y servicios con la etiqueta *myLabel*
-  > kubectl delete pods,services -l name=myLabel
-- Eliminar pods y servicios, incluso los no inicializados, con la etiqueta *myLabel*
-  > kubectl delete pods,services -l name=myLabel --include-uninitialized 
-- Eliminar todos los pods y servicios, incluso los no inicializados, en el *namespace my-ns*,
-  > kubectl -n my-ns delete po,svc --all
 
 ## Bibliografía
 
