@@ -34,10 +34,12 @@
 ## Crear un solo clúster maestro con kubeadm
 
 1. Deshabilitar la SWAP
-    > sudo nano /etc/systemd/system/kubelet.service.d/10-kubeadm.conf  
-    > Environment="KUBELET_EXTRA_ARGS=--fail-swap-on=false"
-    - Otra opcion
-    > sudo swapoff -a
+    - Permanentemente
+      > sudo nano /etc/fstab
+      - Comentar la linea de Swapp
+      > mount -a
+    - Temporalmente
+      > sudo swapoff -a
 2. Reiniciar los servicios
    > sudo systemctl daemon-reload  
    > sudo systemctl restart kubelet  
