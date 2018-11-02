@@ -1,13 +1,12 @@
 # Grafana
 
-## Install
+## Instalarlo
 
-- Install
   > sudo yum install https://s3-us-west-2.amazonaws.com/grafana-releases/release/grafana-5.3.1-1.x86_64.rpm 
 
-## Service
+## Servicio
 
-- Start the server (via systemd)
+- Lanzar el servicio (systemctl)
   > sudo service grafana-server start  
 - Comprobarlo
   > sudo systemctl daemon-reload  
@@ -16,8 +15,10 @@
 
 ## Acceder
 
-- Desde el explorador
+- Lanzarlo
   > sudo iptables -t nat -A PREROUTING -p tcp --dport 9001 -j REDIRECT --to-port 3000
+- Desde el navegador 
+  > http://10.45.17.193:9001/
 
 ## Conceptos básicos
 
@@ -35,3 +36,18 @@
   - Una fila es un divisor lógico dentro de un tablero y se usa para agrupar paneles.
 - Panel
   - El Panel es el bloque de construcción de visualización básica en Grafana.
+  - Actualmente hay cuatro tipos de Panel: 
+    - **Gráfico:** Este panel le permite graficar tantas métricas y series como desee.
+    - **Singlestat:** Requiere una reducción de una sola consulta en un solo número.
+    - **Dashlist:** Es un panel especial que no se conectan a ninguna fuente de datos.
+    - **Tabla y Texto:** Son paneles especiales que no se conectan a ninguna fuente de datos.
+- Editor de consultas (Query editor)
+  - Expone las capacidades de su Origen de datos y le permite consultar las métricas que contiene.
+  - El panel se actualiza instantáneamente, lo que le permite explorar efectivamente los datos en tiempo real y construir una consulta perfecta para ese Panel en particular.
+- Tablero
+  - Es donde se junta todo.
+  - Los paneles se pueden pensar en un conjunto de uno o más paneles organizados y organizados en una o más filas.
+
+## Grafana CLI
+
+> grafana-cli admin
