@@ -40,6 +40,9 @@
       > mount -a
     - Temporalmente
       > sudo swapoff -a
+    - En el servicio de kubernetes
+      - /etc/systemd/system/kubelet.service.d/10-kubeadm.conf
+      > Environment="KUBELET_EXTRA_ARGS=--fail-swap-on=false"
 2. Reiniciar los servicios
    > sudo systemctl daemon-reload  
    > sudo systemctl restart kubelet  
