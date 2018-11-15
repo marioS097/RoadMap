@@ -1,4 +1,11 @@
-# Crear instancias Docker Swarm
+# Crear instancias en OpenStack
+
+- Ubicación
+  1. Compute
+  2. Instancias
+  3. Lanzar instancias
+
+## Configuración
 
 - Details
   - Instance name \[Nombre de la instancia\]
