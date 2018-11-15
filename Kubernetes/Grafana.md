@@ -2,7 +2,7 @@
 
 - **Intalarlo con Prometheus en pods no como servicio**
 
-## Instalarlo
+## Instalación como servicio
 
   > sudo yum install https://s3-us-west-2.amazonaws.com/grafana-releases/release/grafana-5.3.1-1.x86_64.rpm 
 
@@ -49,7 +49,3 @@
 - Tablero
   - Es donde se junta todo.
   - Los paneles se pueden pensar en un conjunto de uno o más paneles organizados y organizados en una o más filas.
-
-## Grafana CLI
-
-> grafana-cli admin

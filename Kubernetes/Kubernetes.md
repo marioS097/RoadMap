@@ -172,19 +172,21 @@
 ### Eliminar un *namespace*
 
 - Eliminar un *namespace*
-  > kubectl delete namespaces [*namespace*]
+  > kubectl delete namespaces *[namespace]*
 
 ## Comandos útiles
 
 - **Quitar nodos**
   - Desde el master
-  > kubectl drain [node name] --delete-local-data --force --ignore-daemonsets  
-  > kubectl delete node [node name]  
+  > kubectl drain *[node name]* --delete-local-data --force --ignore-daemonsets  
+  > kubectl delete node *[node name]*  
   > kubeadm reset
 - **Listar los *token***
     > sudo kubeadm token list
 - **Cambiar el número de replicas**
   > kubectl scale deployment nginx-deployment --replicas=10
+- **Abrir la consola de pod**
+  > kubectl exec -it *[container]* -- /bin/bash
 
 ## Eliminar recursos
 
