@@ -9,7 +9,7 @@
 
 - Crear un nuevo *namespace*
   >  kubectl create namespace monitoring
-- Crear un nuevo archivo llamado *clusterRole.yml*
+- Crear un nuevo archivo llamado *clusterRole.yaml*
 
 ``` yaml
   apiVersion: rbac.authorization.k8s.io/v1beta1
@@ -52,7 +52,7 @@
 
 ## Crear el *Config Map*
 
-- Crear un archivo llamadp *config-map.yaml*
+- Crear un archivo llamado *config-map.yaml*
 
 ``` yaml
 apiVersion: v1
