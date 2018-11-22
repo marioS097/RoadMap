@@ -197,7 +197,7 @@
 - Eliminar pods y servicios con la etiqueta *myLabel*
   > kubectl delete pods,services -l name=myLabel
 - Eliminar pods y servicios, incluso los no inicializados, con la etiqueta *myLabel*
-  > kubectl delete pods,services -l name=myLabel --include-uninitialized 
+  > kubectl delete pods,services -l name=myLabel --include-uninitialized
 - Eliminar todos los pods y servicios, incluso los no inicializados, en el *namespace my-ns*,
   > kubectl -n my-ns delete po,svc --all
 
@@ -221,6 +221,12 @@
   - Resetear todo
   > kubeadm reset  
   > yum remove kubelet kubeadm kubectl
+
+- Problemas al borrar un namespace, se queda en *Terminating*
+  - Comprobar que no tiene recursis asociados (*deployments y pods*)
+  - Comprobar llamadas a la API
+    > kubectl get crd -n [*namespace*]
+    > kubectl get apiservices -n [*namespace*]
 
 ## Bibliografía
 
