@@ -1,26 +1,117 @@
 # Grafana
 
-- **Intalarlo con Prometheus en pods no como servicio**
+## Creacción de archivos
 
-## Instalación como servicio
+- Archivo del despliegue *(Deployment)*
+> vi grafana-delpoyment.yaml
 
-  > sudo yum install https://s3-us-west-2.amazonaws.com/grafana-releases/release/grafana-5.3.1-1.x86_64.rpm 
+``` yaml
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: grafana-core
+  labels:
+    app: grafana
+    component: core
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: grafana
+        component: core
+    spec:
+      containers:
+      - image: grafana/grafana:4.2.0
+        name: grafana-core
+        imagePullPolicy: IfNotPresent
+        # env:
+        resources:
+          # keep request = limit to keep this container in guaranteed class
+          limits:
+            cpu: 100m
+            memory: 100Mi
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        env:
+          # The following env variables set up basic auth twith the default admin user and admin password.
+          - name: GF_AUTH_BASIC_ENABLED
+            value: "true"
+          - name: GF_SECURITY_ADMIN_USER
+            valueFrom:
+              secretKeyRef:
+                name: grafana
+                key: admin-username
+          - name: GF_SECURITY_ADMIN_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: grafana
+                key: admin-password
+          - name: GF_AUTH_ANONYMOUS_ENABLED
+            value: "false"
+          # - name: GF_AUTH_ANONYMOUS_ORG_ROLE
+          #   value: Admin
+          # does not really work, because of template variables in exported dashboards:
+          # - name: GF_DASHBOARDS_JSON_ENABLED
+          #   value: "true"
+        readinessProbe:
+          httpGet:
+            path: /login
+            port: 3000
+          # initialDelaySeconds: 30
+          # timeoutSeconds: 1
+        volumeMounts:
+        - name: grafana-persistent-storage
+          mountPath: /var/lib/grafana
+      volumes:
+      - name: grafana-persistent-storage
+        emptyDir: {}
+```
 
-## Servicio
+- Archivo del servico *(services)*
+> vi grafana-service.yaml
 
-- Lanzar el servicio (systemctl)
-  > sudo service grafana-server start  
-- Comprobarlo
-  > sudo systemctl daemon-reload  
-  > sudo systemctl start grafana-server  
-  > sudo systemctl status grafana-server
+```YAML
+apiVersion: v1
+kind: Service
+metadata:
+  name: grafana
+  labels:
+    app: grafana
+    component: core
+spec:
+  type: NodePort
+  ports:
+    - port: 3000
+      nodePort: 30001
+  selector:
+    app: grafana
+    component: core
+```
 
-## Acceder
+- Archivo con los secretos *(secrets)*
+> vi grafana-secret.yaml
 
-- Lanzarlo
-  > sudo iptables -t nat -A PREROUTING -p tcp --dport 9001 -j REDIRECT --to-port 3000
-- Desde el navegador 
-  > http://10.45.17.193:9001/
+ ``` YAML
+apiVersion: v1
+kind: Secret
+data:
+  admin-password: YWRtaW4=
+  admin-username: YWRtaW4=
+metadata:
+  name: grafana
+type: Opaque
+ ```
+
+- **Lanzar los archivos**
+> kubectl create -f grafana-deployment.yaml  
+> kubectl create -f grafana-service.yaml  
+> kubectl create -f grafana-secret.yaml  
+
+## Documentación
+
+- [Grafana GitHub](https://github.com/giantswarm/kubernetes-prometheus/tree/master/manifests/grafana)
 
 ## Conceptos básicos
 
@@ -38,7 +129,7 @@
   - Una fila es un divisor lógico dentro de un tablero y se usa para agrupar paneles.
 - Panel
   - El Panel es el bloque de construcción de visualización básica en Grafana.
-  - Actualmente hay cuatro tipos de Panel: 
+  - Actualmente hay cuatro tipos de Panel:
     - **Gráfico:** Este panel le permite graficar tantas métricas y series como desee.
     - **Singlestat:** Requiere una reducción de una sola consulta en un solo número.
     - **Dashlist:** Es un panel especial que no se conectan a ninguna fuente de datos.
