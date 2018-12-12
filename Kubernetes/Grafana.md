@@ -1,6 +1,6 @@
 # Grafana
 
-## Creacción de archivos
+## Tutorial
 
 - Archivo del despliegue *(Deployment)*
 > vi grafana-delpoyment.yaml
@@ -112,6 +112,8 @@ type: Opaque
 ## Documentación
 
 - [Grafana GitHub](https://github.com/giantswarm/kubernetes-prometheus/tree/master/manifests/grafana)
+
+---
 
 ## Conceptos básicos
 
