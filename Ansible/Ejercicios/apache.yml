@@ -1,0 +1,13 @@
+---
+- name: Instalar Apache y seleccionar una ruta local para el front-end
+  hosts: 192.168.5.14
+
+  tasks:
+  - name: instalar hhtpd
+    yum: name=httpd state=installed
+
+  - name: Habilitar el servicio httpd
+    service: name=httpd state=started enabled=yes
+
+  - name: Seleccionar la ruta del front-end
+    template: src=/etc/ansible/index.html dest=/var/www/html

@@ -1,0 +1,18 @@
+presentacion
+
+Fondo blanco
+No leer
+Despacio
+Informacion distinta a transparencias
+Capturas sin texto
+Postura
+Tono de voz / Mirar al grupo
+
+
+
+
+Ansible
+httpd --> Terminar
+
+
+

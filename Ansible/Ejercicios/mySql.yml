@@ -1,0 +1,21 @@
+---
+- name: Añadir el repositorio de MySQL e instalar este
+  hosts: 192.168.5.14
+  become: yes
+  become_method: sudo
+  tasks:
+
+  - name: Añadir el repositorio de MySQL
+    yum:
+      name: http://dev.mysql.com/get/mysql57-community-release-el7-9.noarch.rpm
+      state: present
+
+  - name: Instalar MySQL (Version 5.7)
+    yum:
+      name: mysql-server
+      state: present
+
+  - name: Iniciar el servicio MySql
+    service:
+       name: mysqld
+       state: started
