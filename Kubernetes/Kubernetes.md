@@ -7,7 +7,7 @@
 2. Necesario tener docker
     - **Importante** Version 17.03
     ``` CentOS 7
-    yum install --setopt=obsoletes=0 \
+    sudo yum install --setopt=obsoletes=0 \
     docker-ce-17.03.2.ce-1.el7.centos.x86_64 \
     docker-ce-selinux-17.03.2.ce-1.el7.centos.noarch # on a new system with yum repo defined, forcing older version and ignoring obsoletes introduced by 17.06.0
     ```
@@ -16,7 +16,7 @@
         > sudo rm -rf /var/lib/docker
 3. Instalar *kubeadm*, *kubelet* and *kubectl*
     ``` CentOS 7
-    cat <<EOF > /etc/yum.repos.d/kubernetes.repo
+    sudo cat <<EOF > /etc/yum.repos.d/kubernetes.repo
     [kubernetes]
     name=Kubernetes
     baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
@@ -36,7 +36,7 @@
 1. Deshabilitar la SWAP
     - Permanentemente
       > sudo nano /etc/fstab
-      - Comentar la linea de Swapp
+      - Comentar la linea de Swap
       > mount -a
     - Temporalmente
       > sudo swapoff -a
@@ -187,19 +187,33 @@
   > kubectl scale deployment nginx-deployment --replicas=10
 - **Abrir la consola de pod**
   > kubectl exec -it *[container]* -- /bin/bash
+- **Comando para sacar join exacto, desde el Master** 
+  > kubeadm token create --print-join-command
+- **Comando join del nodo**
+  > sudo kubeadm join *[ip]:6443* --token *[token]* --discovery-token-ca-cert-hash *[hash]*
+- **instalar version especifica**
+  > yum install -y kubeadm-1.13.x kubectl-1.13.x kubelet-1.13.x --disableexcludes=kubernetes  
+  > sudo yum install -y kubeadm-1.13.5 kubectl-1.13.5 kubelet-1.13.5 --disableexcludes=kubernetes
+- **Ver listado de versiones**
+  > yum list --showduplicates kubeadm --disableexcludes=kubernetes
+
 
 ## Eliminar recursos
 
-- Eliminar un pod utilizando el tipo y el nombre en especifico del *pod.json*
+- **Eliminar un pod utilizando el tipo y el nombre en especifico del *pod.json***
   > kubectl delete -f ./pod.json
-- Eliminar pods y servicios con los mismos nombres "baz" y "foo"
+- **Eliminar pods y servicios con los mismos nombres "baz" y "foo"**
   > kubectl delete pod,service baz foo
-- Eliminar pods y servicios con la etiqueta *myLabel*
+- **Eliminar pods y servicios con la etiqueta *myLabel***
   > kubectl delete pods,services -l name=myLabel
-- Eliminar pods y servicios, incluso los no inicializados, con la etiqueta *myLabel*
+- **Eliminar pods y servicios, incluso los no inicializados, con la etiqueta *myLabel***
   > kubectl delete pods,services -l name=myLabel --include-uninitialized
-- Eliminar todos los pods y servicios, incluso los no inicializados, en el *namespace my-ns*,
+- **Eliminar todos los pods y servicios, incluso los no inicializados, en el *namespace my-ns***
   > kubectl -n my-ns delete po,svc --all
+- **Eliminar kubernetes**
+  > sudo yum remove -y kubeadm kubectl kubelet kubernetes-cni kube*  
+  > sudo yum autoremove -y   
+  > sudo rm -rf ~/.kube
 
 ## Errores
 
@@ -228,9 +242,20 @@
     > kubectl get crd -n [*namespace*]
     > kubectl get apiservices -n [*namespace*]
 
+- Puertos ocupados, como liberarlos
+  > sudo iptables -F
+
+
+### Todavia no funciona 
+- Unable to update cni config: No networks found in /etc/cni/net.d
+  - [Ayuda](http://www.openwriteup.com/kubelet-service-is-failing-unable-to-update-cni-config-no-networks-found-in-etc-cni-net-d/)  
+  > sudo kubeadm reset   
+  > sudo chmod 777 /etc/cni/net.d  
+  > sudo systemctl start kubelet.service  
+
 ## Bibliografía
 
-- [http://www.javiergarzas.com/2015/07/que-es-docker-sencillo.html](http://www.javiergarzas.com/2015/07/que-es-docker-sencillo.html) (Kubernetes 10 min)
+- [http://www.javiergarzas.com/2015/07/que-es-docker-sencillo.html](http://www.javiergarzas.com/2015/07/que-es-docker-sencillo.html) (Kubernetes en 10 min)
 
 - [https://www.adictosaltrabajo.com/tutoriales/primeros-pasos-con-kubernetes/\#051](https://www.adictosaltrabajo.com/tutoriales/primeros-pasos-con-kubernetes/#051) (Operaciones básicas de Kubernetes)
 
