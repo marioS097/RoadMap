@@ -35,7 +35,7 @@
 
 1. Deshabilitar la SWAP
     - Permanentemente
-      > sudo nano /etc/fstab
+      > sudo vi /etc/fstab
       - Comentar la linea de Swap
       > mount -a
     - Temporalmente
@@ -174,6 +174,8 @@
 - Eliminar un *namespace*
   > kubectl delete namespaces *[namespace]*
 
+## Upgrade cluster entero
+
 ## Comandos útiles
 
 - **Quitar nodos**
@@ -192,7 +194,6 @@
 - **Comando join del nodo**
   > sudo kubeadm join *[ip]:6443* --token *[token]* --discovery-token-ca-cert-hash *[hash]*
 - **instalar version especifica**
-  > yum install -y kubeadm-1.13.x kubectl-1.13.x kubelet-1.13.x --disableexcludes=kubernetes  
   > sudo yum install -y kubeadm-1.13.5 kubectl-1.13.5 kubelet-1.13.5 --disableexcludes=kubernetes
 - **Ver listado de versiones**
   > yum list --showduplicates kubeadm --disableexcludes=kubernetes
@@ -244,6 +245,9 @@
 
 - Puertos ocupados, como liberarlos
   > sudo iptables -F
+
+- Si no detecta los paquetes de docker actualizar el repo
+  > sudo yum erase docker-engine-selinux
 
 
 ### Todavia no funciona 
