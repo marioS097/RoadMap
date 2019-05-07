@@ -147,6 +147,9 @@ nodos.
 
 - Caracteristicas del nodo
   > ansible -m command -a 'hostnamectl' 192.168.5.7
+- Lanzar *playbook*
+  > ansible-playbook *[archivo yml]*
+
 
 
 ---
