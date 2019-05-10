@@ -72,7 +72,7 @@
 ## Lanzar un despliegue
 
 1. Escribir el despliegue en *yaml*
-   > nano nginx-deployment.yaml
+   > vi nginx-deployment.yaml
     ``` YAML
     apiVersion: apps/v1
     kind: Deployment
@@ -152,29 +152,48 @@
 
 ### Crear un namespace
 
-- Crear un nuevo YAML
-  > nano my-namespace.yaml
+1. Crear un nuevo YAML
+   > nano my-namespace.yaml
 
-  ``` YAML
-  apiVersion: v1
-  kind: Namespace
-  metadata:
-    name: mario-namespace
-    labels:
-      name:
-        mario-label
-   ```
+   ``` YAML
+   apiVersion: v1
+   kind: Namespace
+   metadata:
+     name: mario-namespace
+     labels:
+       name:
+         mario-label
+    ```
 
-  > kubectl create -f ./my-namespace.yaml
-- Comprobar que se ha creado
-    > kubectl get namespaces --show-labels
+   > kubectl create -f ./my-namespace.yaml
+2. Comprobar que se ha creado
+   > kubectl get namespaces --show-labels
 
 ### Eliminar un *namespace*
 
 - Eliminar un *namespace*
   > kubectl delete namespaces *[namespace]*
 
-## Upgrade cluster entero
+## Actualizar cluster entero
+
+1. Comprobar la lista de versiones
+   > sudo yum list --showduplicates kubeadm --disableexcludes=kubernetes
+2. En el master actualizar el *kubeadm*
+   > yum install -y kubeadm-1.13.x-0 --disableexcludes=kubernetes
+3. Verificar que la descarga funcione y tenga la versión esperada
+   > kubeadm version
+4. En el master ejecutar este comando
+   > kubeadm upgrade plan
+5. Elija una versión para actualizar y ejecute el comando apropiado
+   > kubeadm upgrade apply v1.x.0
+6. Tendría que salir un resultado parecido a este
+   ```
+   [upgrade/successful] SUCCESS! Your cluster was upgraded to "v1.14.0". Enjoy!
+
+   [upgrade/kubelet] Now that your control plane is upgraded, please proceed with upgrading your kubelets if you haven't already done so.
+   ```
+7. Actualice el kubelet en el nodo del plano de control
+   > yum install -y kubelet-1.x.x-0 --disableexcludes=kubernetes
 
 ## Comandos útiles
 
