@@ -100,12 +100,12 @@
    > kubectl create -f nginx-deployment.yaml
 3. Comprobar que se ha lanzado
    > kubectl get deployments
-   - **NAME:** enumera los nombres de los desliegues
-   - **DESIRED:** muestra el número deseado de réplicas de la aplicación
-   - **CURRENT:** muestra cuántas réplicas se están ejecutando actualmente
-   - **UP-TO-DATE:** muestra el número de réplicas que se han actualizado para lograr el estado deseado
-   - **AVIABLE:** muestra cuántas réplicas de la aplicación están disponibles
-   - **AGE:** muestra la cantidad de tiempo que la aplicación ha estado ejecutándose
+   - **NAME:** Enumera los nombres de los desliegues
+   - **DESIRED:** Muestra el número deseado de réplicas de la aplicación
+   - **CURRENT:** Muestra cuántas réplicas se están ejecutando actualmente
+   - **UP-TO-DATE:** Muestra el número de réplicas que se han actualizado para lograr el estado deseado
+   - **AVIABLE:** Muestra cuántas réplicas de la aplicación están disponibles
+   - **AGE:** Muestra la cantidad de tiempo que la aplicación ha estado ejecutándose
 4. Ver las *ReplicaSet* creadas en la implementación
    > kubectl get rs
 5. Ver las etiquetas generadas en casa *pod*
@@ -194,6 +194,10 @@
    ```
 7. Actualice el kubelet en el nodo del plano de control
    > yum install -y kubelet-1.x.x-0 --disableexcludes=kubernetes
+
+### Comando *kops*
+
+- *Kops* es un proyecto oficial de Kubernetes para la gestión de clusters de Kubernetes de grado de producción.
 
 ## Comandos útiles
 
