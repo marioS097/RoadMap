@@ -135,6 +135,8 @@
   > kubectl autoscale deployment nginx-deployment --min=10 --max=15 --cpu-percent=80
 - Comprobarlo
   > kubectl get deployments
+- Comprobar las normas activas de autoescalados
+  > kubectl get hpa
 - Eliminar las normas de autoescalado
   > kubectl delete hpa nginx-deployment
 
@@ -174,6 +176,8 @@
 - Eliminar un *namespace*
   > kubectl delete namespaces *[namespace]*
 
+---
+
 ## Actualizar cluster entero
 
 1. Comprobar la lista de versiones
@@ -194,6 +198,22 @@
    ```
 7. Actualice el kubelet en el nodo del plano de control
    > yum install -y kubelet-1.x.x-0 --disableexcludes=kubernetes
+8. **Actualizar kubectl en todos los nodos(workers)**
+   > yum install -y kubectl-1.13.x-0 --disableexcludes=kubernetes
+9. Preparar el nodo marcandolo como *unshedulable* y desalojando las cargas de trabajo
+   > kubectl drain *[nodo]* --ignore-daemonsets
+10. En cada nodo, excepto el nodo manager, actualice la configuración de *kubelet*
+    > kubeadm upgrade node config --kubelet-version v1.13.x
+11. Actualizar la versión del paquete Kubernetes en cada nodo 
+    > yum install -y kubelet-1.13.x-0 kubeadm-1.13.x-0 --disableexcludes=kubernetes
+12. Reiniciar el proceso de *kubelet* en todos los nodos
+    > systemctl restart kubelet
+13. Volver a marcar el noco como *shedulable*
+    > kubectl uncordon *[nodo]*
+14. Una vez que se haya actualizado kubelet en todos los nodos, verificar que todos los nodos estén disponibles
+    > kubectk get nodes
+
+--- 
 
 ### Comando *kops*
 
