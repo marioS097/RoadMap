@@ -14,6 +14,8 @@
     > sudo systemctl status docker.service
     - En caso de error al inicar el servicio, borrar el contenido de */var/lib/docker*
         > sudo rm -rf /var/lib/docker
+    - En caso de problema añadir el repositorio
+        > sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
 3. Instalar *kubeadm*, *kubelet* and *kubectl*
     ``` CentOS 7
     sudo cat <<EOF > /etc/yum.repos.d/kubernetes.repo
@@ -215,10 +217,6 @@
 
 --- 
 
-### Comando *kops*
-
-- *Kops* es un proyecto oficial de Kubernetes para la gestión de clusters de Kubernetes de grado de producción.
-
 ## Comandos útiles
 
 - **Quitar nodos**
@@ -241,6 +239,9 @@
 - **Ver listado de versiones**
   > yum list --showduplicates kubeadm --disableexcludes=kubernetes
 
+### Comando *kops*
+
+- *Kops* es un proyecto oficial de Kubernetes para la gestión de clusters de Kubernetes de grado de producción.
 
 ## Eliminar recursos
 
@@ -263,14 +264,16 @@
 
 - [ERROR FileContent--proc-sys-net-bridge-bridge-nf-call-iptables]: /proc/sys/net/bridge/bridge-nf-call-iptables contents are not set to 1
   - Editar el archivo y cambiar el *0* por el *1*
-  > sudo nano /proc/sys/net/bridge/bridge-nf-call-iptables
+  > sudo vi /proc/sys/net/bridge/bridge-nf-call-iptables  
+  - e667 fsync failed vi error
+  > sysctl net.bridge.bridge-nf-call-iptables=1 
 
 - [WARNING SystemVerification]: docker version is greater than the most recently validated version. Docker version: 18.06.1-ce. Max validated version: 17.03
   > sudo yum install docker-ce-17.03.0.ce-1.el7.centos
 
 - [ERROR FileContent--proc-sys-net-bridge-bridge-nf-call-iptables]
   - Editar el fichero de configuración y añadir la siguiente linea
-  > sudo nano /etc/sysctl.conf  
+  > sudo vi /etc/sysctl.conf  
   > net.bridge.bridge-nf-call-iptables = 1
   >
   > sudo sysctl -p
@@ -299,6 +302,9 @@
   > sudo kubeadm reset   
   > sudo chmod 777 /etc/cni/net.d  
   > sudo systemctl start kubelet.service  
+
+
+- rpm -aq | grep -i kube
 
 ## Bibliografía
 
