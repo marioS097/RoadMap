@@ -9,7 +9,7 @@
    > sudo mkdir /etc/prometheus  
    > sudo mkdir /var/lib/prometheus
 4. Descargar la fuente usando *curl*, descomprímala y cambiar el nombre de la carpeta extraída a *prometheus-files*.
-    > curl -LO [curl -LO https://github.com/prometheus/prometheus/releases/download/v2.3.2/prometheus-2.3.2.linux-amd64.tar.gz](https://github.com/prometheus/prometheus/releases/download/v2.3.2/prometheus-2.3.2.linux-amd64.tar.gz)
+    > curl -LO [curl -LO https://github.com/prometheus/prometheus/releases/download/v2.3.2/prometheus-2.3.2.linux-amd64.tar.gz](https://github.com/prometheus/prometheus/releases/download/v2.3.2/prometheus-2.3.2.linux-amd64.tar.gz)  
     > tar -xvf prometheus-2.3.2.linux-amd64.tar.gz  
     > mv prometheus-2.3.2.linux-amd64 prometheus-files
 5. Copiar los archivos binarios prometheus y promtool de la carpeta prometheus-files a /usr/local/bin
@@ -89,9 +89,9 @@
     - Primero, conocer el nombre del pod de Prometheus
       > kubectl get pods --namespace=monitoring
     - Ejecutar el siguiente comando con el nombre de tu pod para acceder a Prometheus desde el puerto 9100 *(Remplazar XXXXXX-XXXXXX por el nombre del pod)*
-      > kubectl port-forward prometheus-monitoring-XXXXXX-XXXXXX 8080:9100 -n monitoring
+      > kubectl port-forward prometheus-monitoring-XXXXXX-XXXXXX 8080:30000 -n monitoring
 2. Exponer como un servicio
-    - Crear un archivo llamado *prometheus-service.yaml*. Expondremos Prometheus en el puerto 9100
+    - Crear un archivo llamado *prometheus-service.yaml*. Expondremos Prometheus en el puerto 30000
     ``` yaml
     apiVersion: v1
     kind: Service
@@ -108,7 +108,7 @@
     ```
     - Exponerlo con el siguiente comando
     > kubectl create -f prometheus-service.yaml --namespace=monitoring
-    - Una vez creado, puede acceder al panel de Prometheus utilizando cualquier IP de nodo Kubernetes en el puerto 9200
+    - Una vez creado, puede acceder al panel de Prometheus utilizando cualquier IP de nodo Kubernetes en el puerto 30000
 
 ## Bibliografia
 
