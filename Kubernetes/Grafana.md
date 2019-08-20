@@ -109,9 +109,20 @@ type: Opaque
 > kubectl create -f grafana-service.yaml  
 > kubectl create -f grafana-secret.yaml  
 
-## Documentación
+---
 
-- [Grafana GitHub](https://github.com/giantswarm/kubernetes-prometheus/tree/master/manifests/grafana)
+## Prometheus
+
+### Crear *Data source* de Prometheus
+
+1. Iniciar sesión en Grafana
+2. Configurations
+3. Data Sources
+4. Add data source
+5. Prometheus
+   - URL: *http://[ip_adress]:9090*
+   - Acess: *Browser*
+   - *Save & Test*
 
 ---
 
@@ -137,8 +148,77 @@ type: Opaque
     - **Dashlist:** Es un panel especial que no se conectan a ninguna fuente de datos.
     - **Tabla y Texto:** Son paneles especiales que no se conectan a ninguna fuente de datos.
 - Editor de consultas (Query editor)
-  - Expone las capacidades de su Origen de datos y le permite consultar las métricas que contiene.
+  - Expone las capacidades de su origen de datos y le permite consultar las métricas que contiene.
   - El panel se actualiza instantáneamente, lo que le permite explorar efectivamente los datos en tiempo real y construir una consulta perfecta para ese Panel en particular.
 - Tablero
   - Es donde se junta todo.
   - Los paneles se pueden pensar en un conjunto de uno o más paneles organizados y organizados en una o más filas.
+
+---
+
+## Metricas de Kubernetes
+
+- Crear el deployment
+> vi kube-state-metrics-deployment.yml 
+``` yml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: kube-state-metrics
+  name: kube-state-metrics
+  namespace: kube-system
+spec:
+  selector:
+    matchLabels:
+      k8s-app: kube-state-metrics
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        k8s-app: kube-state-metrics
+    spec:
+      serviceAccountName: kube-state-metrics
+      containers:
+      - name: kube-state-metrics
+        image: quay.io/coreos/kube-state-metrics:v1.7.2
+        ports:
+        - name: http-metrics
+          containerPort: 8080
+        - name: telemetry
+          containerPort: 8081
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 8080
+          initialDelaySeconds: 5
+          timeoutSeconds: 5
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 5
+          timeoutSeconds: 5
+```
+
+
+---
+
+## Consultas *(Query)* interesantes
+
+- Ver los *pods* de un *deployment*
+  > kube_deployment_spec_replicas{deployment="*[Deployment]*"}
+- Ver *pods* por *nodo*
+  > kubelet_running_pod_count{kubernetes_io_hostname="*[Nodo]*"}
+
+---
+## Errores
+
+- **! Unauthorized**
+- *grafana failed to look up user based on cookie" logger=context error="user token not found"*
+  - Comprobar que solo haya un pod para grafana 
+
+---
+## Documentación
+
+- [Grafana GitHub](https://github.com/giantswarm/kubernetes-prometheus/tree/master/manifests/grafana)
